@@ -128,10 +128,10 @@ public class LoginSignupGUI extends JFrame {
 class HomePages extends JFrame {
     private JLabel welcomeLabel;
     private JButton logoutButton;
-    private LoginSignupGUI parentFrame;
+    // private LoginSignupGUI parentFrame;
 
     public HomePages(String username, LoginSignupGUI parentFrame) {
-        this.parentFrame = parentFrame;
+        // this.parentFrame = parentFrame;
 
         setTitle("To-Do List Home");
         setSize(300, 200);
@@ -148,12 +148,12 @@ class HomePages extends JFrame {
 
         add(panel);
 
-        logoutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setVisible(false); // Hide the home page
-                parentFrame.setVisible(true); // Show the login/signup page
-            }
-        });
+        // logoutButton.addActionListener(new ActionListener() {
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+        //         setVisible(false); // Hide the home page
+        //         parentFrame.setVisible(true); // Show the login/signup page
+        //     }
+        // });
     }
 }

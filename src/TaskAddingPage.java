@@ -1,10 +1,12 @@
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
-import java.awt.Image;
+import com.toedter.calendar.JDateChooser;
+
 
 public class TaskAddingPage extends JFrame {
-    private JTextField taskDescriptionField, dueDateField;
+    private JTextField taskDescriptionField;
+    JDateChooser dueDateField;
     private JComboBox<String> priorityComboBox;
     private JTextArea displayArea;
 
@@ -30,7 +32,7 @@ public class TaskAddingPage extends JFrame {
         JLabel dueDateLabel = new JLabel("Due Date:");
         dueDateLabel.setBounds(50, 80, 120, 20);  // Adjusted position
         add(dueDateLabel);
-        dueDateField = new JTextField();
+        dueDateField =  new JDateChooser();
         dueDateField.setBounds(180, 80, 350, 20);  // Adjusted size
         add(dueDateField);
 
@@ -82,9 +84,8 @@ public class TaskAddingPage extends JFrame {
 
     private void addTask() {
         String taskDescription = taskDescriptionField.getText();
-        String dueDate = dueDateField.getText();
+        String dueDate = ((JTextField) dueDateField.getDateEditor().getUiComponent()).getText();
         String priority = (String) priorityComboBox.getSelectedItem();
-        
         // Add task to database
 
         displayArea.append("Task: " + taskDescription + ", Due Date: " + dueDate + ", Priority: " + priority + "\n");
@@ -93,7 +94,7 @@ public class TaskAddingPage extends JFrame {
 
     private void clearFields() {
         taskDescriptionField.setText("");
-        dueDateField.setText("");
+        dueDateField.setToolTipText("");
         priorityComboBox.setSelectedIndex(0);
     }
 

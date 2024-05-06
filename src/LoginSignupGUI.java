@@ -73,6 +73,7 @@ public class LoginSignupGUI extends JFrame {
                 // TODO: set multi-user support. 
                 if (username.equals("admin") && password.equals("admin")) {
                     JOptionPane.showMessageDialog(LoginSignupGUI.this, "Login Successful!");
+                    setVisible(false);
                     openHomePage(username);
                 } else {
                     JOptionPane.showMessageDialog(LoginSignupGUI.this, "Invalid username or password.");

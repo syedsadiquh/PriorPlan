@@ -2,19 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class LoginSignupGUI extends JFrame {
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton loginButton;
     private JButton signupButton;
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/your_database_name";
-    private static final String USER = "your_username";
-    private static final String PASSWORD = "your_password";
 
     public LoginSignupGUI() {
 
@@ -66,21 +60,26 @@ public class LoginSignupGUI extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                String password = new String(passwordField.getPassword());
-
-                // Validate user credentials (mock validation)
-                // TODO: set multi-user support. 
-                if (username.equals("admin") && password.equals("admin")) {
-                    JOptionPane.showMessageDialog(LoginSignupGUI.this, "Login Successful!");
-                    setVisible(false);
-                    openHomePage(username);
-                } else {
-                    JOptionPane.showMessageDialog(LoginSignupGUI.this, "Invalid username or password.");
+                try {
+                    String username = usernameField.getText();
+                    String password = new String(passwordField.getPassword());
+                    DatabaseConnector c = new DatabaseConnector();
+                    String query = "select * from users where username = '" + username + "'and password = '" + password + "'";
+                    ResultSet rs = c.s.executeQuery(query);
+                    if (rs.next()) {
+                        setVisible(false);
+                        new HomePage().setVisible(true);;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Invalid username or password");
+                        usernameField.setText("");
+                        passwordField.setText("");
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         });
-
+        
         signupButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -97,24 +96,20 @@ public class LoginSignupGUI extends JFrame {
     }
 
     private boolean signupUser(String username, String password) {
-        try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
+        try {
+            DatabaseConnector c = new DatabaseConnector();
             String query = "INSERT INTO users (username, password) VALUES (?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(query);
+            PreparedStatement pstmt = c.prepareStatement(query);
             pstmt.setString(1, username);
             pstmt.setString(2, password);
-            pstmt.executeUpdate();
-            return true;
+            int rowsInserted = pstmt.executeUpdate();
+            return rowsInserted > 0;
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
         }
     }
-
-    private void openHomePage(String username) {
-        // Open the home page with the given username
-        new HomePage().setVisible(true);
-        setVisible(false); // Hide the login/signup page
-    }
+    
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -140,7 +135,6 @@ class HomePages extends JFrame {
 
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
-
         welcomeLabel = new JLabel("Welcome, " + username + "!");
         panel.add(welcomeLabel);
 
@@ -149,12 +143,6 @@ class HomePages extends JFrame {
 
         add(panel);
 
-        // logoutButton.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         setVisible(false); // Hide the home page
-        //         parentFrame.setVisible(true); // Show the login/signup page
-        //     }
-        // });
     }
 }
+ 

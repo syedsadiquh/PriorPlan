@@ -44,7 +44,7 @@ public class TaskManagerFrame extends JFrame {
 
     private void displayPendingTasks() {
         try {
-            PreparedStatement statement = connector.prepareStatement("SELECT * FROM tasks WHERE done = false");
+            PreparedStatement statement = connector.prepareStatement("SELECT * FROM tasks WHERE done = false ORDER BY priority ASC");
             ResultSet resultSet = statement.executeQuery();
     
             while (resultSet.next()) {
@@ -65,7 +65,7 @@ public class TaskManagerFrame extends JFrame {
             JOptionPane.showMessageDialog(null, "Error fetching tasks: " + ex.getMessage());
         }
     }
-    
+        
     private JPanel createTaskPanel(String description, String dueDate, String priority, int taskId) {
         JPanel taskPanel = new JPanel();
         taskPanel.setLayout(new BorderLayout());

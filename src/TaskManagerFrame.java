@@ -18,6 +18,7 @@ public class TaskManagerFrame extends JFrame {
 
         tasksPanel = new JPanel();
         tasksPanel.setLayout(new BoxLayout(tasksPanel, BoxLayout.Y_AXIS));
+        tasksPanel.setBackground(new Color(170, 110, 181));
         JScrollPane scrollPane = new JScrollPane(tasksPanel);
         add(scrollPane, BorderLayout.CENTER);
 
@@ -53,6 +54,7 @@ public class TaskManagerFrame extends JFrame {
                 int taskId = resultSet.getInt("task_id");
     
                 JPanel taskPanel = createTaskPanel(description, dueDate, priority, taskId);
+                taskPanel.setBackground(new Color(170, 110, 181));
                 tasksPanel.add(taskPanel);
             }
     

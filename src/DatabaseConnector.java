@@ -6,7 +6,6 @@ public class DatabaseConnector {
 
     public DatabaseConnector() {
         try {
-            // Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost:3306/todo_list";
             String username = "root";
             String password = "Whoami@2000";

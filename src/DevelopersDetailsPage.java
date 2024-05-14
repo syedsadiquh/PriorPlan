@@ -48,7 +48,7 @@ public class DevelopersDetailsPage extends JFrame {
         nameLabel2.setFont(new Font("Calibri", Font.BOLD, 14));
         add(nameLabel2);
 
-        JLabel emailLabel2 = new JLabel("Email: syedsadiqu@example.com");
+        JLabel emailLabel2 = new JLabel("Email: syedsadiquh@gmail.com");
         emailLabel2.setBounds(330, 250, 300, 20);
         emailLabel2.setFont(new Font("Calibri", Font.BOLD, 14));
         add(emailLabel2);

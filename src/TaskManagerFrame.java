@@ -1,8 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.sql.*;
-import java.sql.SQLException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class TaskManagerFrame extends JFrame {
     private JPanel tasksPanel;
@@ -20,6 +20,21 @@ public class TaskManagerFrame extends JFrame {
         tasksPanel.setLayout(new BoxLayout(tasksPanel, BoxLayout.Y_AXIS));
         JScrollPane scrollPane = new JScrollPane(tasksPanel);
         add(scrollPane, BorderLayout.CENTER);
+
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Logic to return to homepage
+                new HomePage().setVisible(true);
+                dispose(); // Close the current frame
+            }
+        });
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.setBackground(new Color(170, 110, 181));
+        buttonPanel.add(backButton);
+        add(buttonPanel, BorderLayout.SOUTH);
+
 
         displayPendingTasks();
 
@@ -51,25 +66,49 @@ public class TaskManagerFrame extends JFrame {
     
     private JPanel createTaskPanel(String description, String dueDate, String priority, int taskId) {
         JPanel taskPanel = new JPanel();
-        taskPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        taskPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        taskPanel.setBackground(new Color(170, 110, 181));
+        taskPanel.setSize(5, 10);
+    
+        // Vertical components panel
+        JPanel verticalPanel = new JPanel();
+        verticalPanel.setLayout(new BoxLayout(verticalPanel, BoxLayout.Y_AXIS));
+        verticalPanel.setAlignmentX(Component.RIGHT_ALIGNMENT); // Align right
+        verticalPanel.setBackground(new Color(170, 110, 181));
     
         JLabel descriptionLabel = new JLabel("Description: " + description);
-        taskPanel.add(descriptionLabel);
+        JLabel dueDateLabel = new JLabel("Due Date: " + dueDate);
+        JLabel priorityLabel = new JLabel("Priority: " + priority);
+    
+        verticalPanel.add(descriptionLabel);
+        verticalPanel.add(dueDateLabel);
+        verticalPanel.add(priorityLabel);
+    
+        // Horizontal components panel
+        JPanel horizontalPanel = new JPanel();
+        horizontalPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        horizontalPanel.setBackground(new Color(170, 110, 181));
     
         JButton updateButton = createUpdateButton(description, dueDate, priority, taskId);
-        taskPanel.add(updateButton);
-    
         JButton deleteButton = createDeleteButton(taskId);
-        taskPanel.add(deleteButton);
-    
         JButton completeButton = createCompleteButton(taskId);
-        taskPanel.add(completeButton);
+    
+        horizontalPanel.add(updateButton);
+        horizontalPanel.add(deleteButton);
+        horizontalPanel.add(completeButton);
+    
+        taskPanel.add(verticalPanel);
+        taskPanel.add(horizontalPanel);
     
         return taskPanel;
     }
     
+    
+    
     private JButton createUpdateButton(String description, String dueDate, String priority, int taskId) {
         JButton updateButton = new JButton("Update");
+        updateButton.setFocusPainted(false);
+        updateButton.setBackground(new Color(3, 190, 252));
         updateButton.addActionListener(e -> {
             // Create a dialog box for updating task details
             JPanel panel = new JPanel();
@@ -105,6 +144,8 @@ public class TaskManagerFrame extends JFrame {
     
     private JButton createDeleteButton(int taskId) {
         JButton deleteButton = new JButton("Delete");
+        deleteButton.setFocusPainted(false);
+        deleteButton.setBackground(Color.RED);
         deleteButton.addActionListener(e -> {
             try {
                 String description = getDescription(taskId);
@@ -124,6 +165,8 @@ public class TaskManagerFrame extends JFrame {
     
     private JButton createCompleteButton(int taskId) {
         JButton completeButton = new JButton("Complete");
+        completeButton.setFocusPainted(false);
+        completeButton.setBackground(Color.GREEN);
         completeButton.addActionListener(e -> {
             try {
                 String description = getDescription(taskId);

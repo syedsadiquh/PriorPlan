@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class HomePage extends JFrame implements ActionListener {
-    JButton Add, developer, about;
+    JButton Add, developer, about, manage;
 
     public HomePage() {
         setTitle("Home Page");
@@ -24,7 +24,7 @@ public class HomePage extends JFrame implements ActionListener {
         add(desc);
 
         Add = new JButton("Add Task");
-        Add.setBounds(100, 150, 150, 40);
+        Add.setBounds(100, 130, 150, 40);
         Add.addActionListener(this); // Add ActionListener to the button
         Add.setFocusPainted(false);
         Add.setBackground(new Color(3, 190, 252));
@@ -32,7 +32,7 @@ public class HomePage extends JFrame implements ActionListener {
         add(Add);
 
         developer = new JButton("Developer Details");
-        developer.setBounds(100, 250, 150, 40);
+        developer.setBounds(100, 230, 150, 40);
         developer.addActionListener(this); // Add ActionListener to the button
         developer.setFocusPainted(false);
         developer.setBackground(new Color(3, 190, 252));
@@ -40,12 +40,20 @@ public class HomePage extends JFrame implements ActionListener {
         add(developer);
 
         about = new JButton("About");
-        about.setBounds(100, 200, 150, 40);
+        about.setBounds(100, 280, 150, 40);
         about.addActionListener(this); // Add ActionListener to the button
         about.setFocusPainted(false);
         about.setBackground(new Color(3, 190, 252));
         about.setForeground(Color.BLACK);
         add(about);
+
+        manage = new JButton("Manage-Task");
+        manage.setBounds(100, 180, 150, 40);
+        manage.addActionListener(this); // Add ActionListener to the button
+        manage.setFocusPainted(false);
+        manage.setBackground(new Color(3, 190, 252));
+        manage.setForeground(Color.BLACK);
+        add(manage);
 
         ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("Backgroundimage/Homepage.jpg"));
         Image i2 = i1.getImage().getScaledInstance(800, 400, Image.SCALE_DEFAULT);
@@ -57,15 +65,15 @@ public class HomePage extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
+        setVisible(false);
         if (ae.getSource() == Add) {
-            setVisible(false);
             new TaskAddingPage().setVisible(true);
         } else if (ae.getSource() == developer) {
-            setVisible(false);
             new DevelopersDetailsPage().setVisible(true);
         } else if (ae.getSource() == about) {
-            setVisible(false);
             new AboutPage().setVisible(true);
+        } else if (ae.getSource() == manage){
+            new TaskManagerFrame().setVisible(true);
         }
     }
 

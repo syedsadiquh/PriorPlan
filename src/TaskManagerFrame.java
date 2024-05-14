@@ -68,9 +68,8 @@ public class TaskManagerFrame extends JFrame {
     
     private JPanel createTaskPanel(String description, String dueDate, String priority, int taskId) {
         JPanel taskPanel = new JPanel();
-        taskPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        taskPanel.setLayout(new BorderLayout());
         taskPanel.setBackground(new Color(170, 110, 181));
-        taskPanel.setSize(5, 10);
     
         // Vertical components panel
         JPanel verticalPanel = new JPanel();
@@ -99,14 +98,12 @@ public class TaskManagerFrame extends JFrame {
         horizontalPanel.add(deleteButton);
         horizontalPanel.add(completeButton);
     
-        taskPanel.add(verticalPanel);
-        taskPanel.add(horizontalPanel);
+        taskPanel.add(verticalPanel, BorderLayout.WEST);
+        taskPanel.add(horizontalPanel, BorderLayout.EAST);
     
         return taskPanel;
     }
-    
-    
-    
+        
     private JButton createUpdateButton(String description, String dueDate, String priority, int taskId) {
         JButton updateButton = new JButton("Update");
         updateButton.setFocusPainted(false);

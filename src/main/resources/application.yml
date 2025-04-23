@@ -2,6 +2,9 @@ spring:
   application:
     name: Prior Plan
 
+  main:
+    web-application-type: none
+
   datasource:
     url: jdbc:postgresql://localhost:5432/priorplan
     username: postgres

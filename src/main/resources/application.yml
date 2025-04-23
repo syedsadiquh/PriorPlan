@@ -1,1 +1,15 @@
-spring.application.name=Prior Plan
+spring:
+  application:
+    name: Prior Plan
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/priorplan
+    username: postgres
+    password: root1234
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    show-sql: true

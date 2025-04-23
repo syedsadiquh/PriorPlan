@@ -1,3 +1,5 @@
+package com.syedsadiquh.priorplan.ui;
+
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Font;

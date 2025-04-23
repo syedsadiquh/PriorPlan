@@ -1,3 +1,5 @@
+package com.syedsadiquh.priorplan.ui;
+
 import java.sql.*;
 
 public class DatabaseConnector {

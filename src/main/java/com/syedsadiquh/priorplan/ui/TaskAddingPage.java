@@ -11,15 +11,11 @@ import com.syedsadiquh.priorplan.models.Task;
 import com.syedsadiquh.priorplan.repository.TaskRepository;
 import com.toedter.calendar.JDateChooser;
 
-import java.io.BufferedWriter;
-import java.io.CharArrayWriter;
-import java.io.IOException;
-import java.io.Writer;
-import java.sql.*;
 import java.util.List;
 
 
 public class TaskAddingPage extends JFrame {
+    private JTextField taskTitleField;
     private JTextField taskDescriptionField;
     private JDateChooser dueDateField;
     private JComboBox<String> priorityComboBox;
@@ -40,13 +36,22 @@ public class TaskAddingPage extends JFrame {
         titleLabel.setFont(boldFont);
         add(titleLabel);
 
+        JLabel taskTitleLabel = new JLabel("Task Title:");
+        taskTitleLabel.setBounds(50, 30, 150, 20);
+        taskTitleLabel.setFont(boldFont);
+        add(taskTitleLabel);
+
+        taskTitleField = new JTextField();
+        taskTitleField.setBounds(200, 30, 350, 20);
+        add(taskTitleField);
+
         JLabel taskDescriptionLabel = new JLabel("Task Description:");
-        taskDescriptionLabel.setBounds(50, 50, 150, 20);
+        taskDescriptionLabel.setBounds(50, 55, 150, 20);
         taskDescriptionLabel.setFont(boldFont);
         add(taskDescriptionLabel);
 
         taskDescriptionField = new JTextField();
-        taskDescriptionField.setBounds(200, 50, 350, 20);
+        taskDescriptionField.setBounds(200, 55, 350, 20);
         add(taskDescriptionField);
 
         JLabel dueDateLabel = new JLabel("Due Date:");
@@ -110,13 +115,14 @@ public class TaskAddingPage extends JFrame {
     }
 
     private void addTask() {
+        String taskTitle = taskTitleField.getText();
         String taskDescription = taskDescriptionField.getText();
         String dueDate = ((JTextField) dueDateField.getDateEditor().getUiComponent()).getText();
         String priority = (String) priorityComboBox.getSelectedItem();
         
         // insert task details into the database
         var taskRepo = (TaskRepository) PriorPlanApplication.getApplicationContext().getBean("taskRepository");
-        var res = new TaskDAO(taskRepo).insertTask(Global.user, taskDescription, priority, dueDate);
+        var res = new TaskDAO(taskRepo).insertTask(Global.user, taskTitle, taskDescription, priority, dueDate);
         if (res) {
             // Task inserted successfully
             System.out.println("New Task Added");

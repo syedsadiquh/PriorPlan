@@ -19,7 +19,7 @@ public class TaskDAO {
         this.taskRepository = taskRepository;
     }
 
-    public boolean insertTask(User user, String title, String priority, String dueDate) {
+    public boolean insertTask(User user, String title, String desc, String priority, String dueDate) {
         try {
             LocalDate date = LocalDate.parse(dueDate.replace(" ", "-"), 
                 DateTimeFormatter.ofPattern("dd-MMM-yyyy"));
@@ -28,6 +28,7 @@ public class TaskDAO {
             var task = Task.builder()
                     .user(user)
                     .title(title)
+                    .description(desc)
                     .priority(TaskPriority.valueOf(priority))
                     .dueDate(dateTime)
                     .build();

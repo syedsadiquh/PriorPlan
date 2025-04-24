@@ -17,11 +17,11 @@ public class DevelopersDetailsPage extends JFrame {
         getContentPane().setBackground(new Color(3, 190, 252));
 
         // Load and resize images
-        ImageIcon hiteshIcon = new ImageIcon(getClass().getResource("/Backgroundimage/hitesh.jpg"));
+        ImageIcon hiteshIcon = new ImageIcon(getClass().getResource("/BackgroundImage/hitesh.jpg"));
         Image hiteshImage = hiteshIcon.getImage().getScaledInstance(200, 150, Image.SCALE_SMOOTH);
         ImageIcon hiteshScaledIcon = new ImageIcon(hiteshImage);
 
-        ImageIcon syedIcon = new ImageIcon(getClass().getResource("/Backgroundimage/Syed.jpg"));
+        ImageIcon syedIcon = new ImageIcon(getClass().getResource("/BackgroundImage/Syed.jpg"));
         Image syedImage = syedIcon.getImage().getScaledInstance(200, 150, Image.SCALE_SMOOTH);
         ImageIcon syedScaledIcon = new ImageIcon(syedImage);
 

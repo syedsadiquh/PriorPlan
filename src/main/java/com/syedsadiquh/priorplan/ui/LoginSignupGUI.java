@@ -1,5 +1,9 @@
 package com.syedsadiquh.priorplan.ui;
 
+import com.syedsadiquh.priorplan.PriorPlanApplication;
+import com.syedsadiquh.priorplan.dao.UserDAO;
+import com.syedsadiquh.priorplan.repository.UserRepository;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -45,14 +49,14 @@ public class LoginSignupGUI extends JFrame {
         add(loginButton);
         add(signupButton);
 
-        ImageIcon i5 = new ImageIcon(ClassLoader.getSystemResource("Backgroundimage/LoginIon.png"));
+        ImageIcon i5 = new ImageIcon(ClassLoader.getSystemResource("BackgroundImage/LoginIon.png"));
         Image i4 = i5.getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT);
         ImageIcon i6 = new ImageIcon(i4);
         JLabel image1 = new JLabel(i6);
         image1.setBounds(130, -20, 600, 400);
         add(image1);
 
-        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("Backgroundimage/LoginPage.png"));
+        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("BackgroundImage/LoginPage.png"));
         Image i2 = i1.getImage().getScaledInstance(600, 400, Image.SCALE_DEFAULT);
         ImageIcon i3 = new ImageIcon(i2);
         JLabel image = new JLabel(i3);
@@ -65,10 +69,9 @@ public class LoginSignupGUI extends JFrame {
                 try {
                     String username = usernameField.getText();
                     String password = new String(passwordField.getPassword());
-                    DatabaseConnector c = new DatabaseConnector();
-                    String query = "select * from users where username = '" + username + "'and password = '" + password + "'";
-                    ResultSet rs = c.s.executeQuery(query);
-                    if (rs.next()) {
+                    var userRepo = (UserRepository) PriorPlanApplication.getApplicationContext().getBean("userRepository");
+                    boolean res = new UserDAO(userRepo).checkUserInDB(username, password);
+                    if (res) {
                         setVisible(false);
                         new HomePage().setVisible(true);;
                     } else {

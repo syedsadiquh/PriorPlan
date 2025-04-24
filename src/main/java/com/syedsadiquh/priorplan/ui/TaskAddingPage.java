@@ -86,7 +86,7 @@ public class TaskAddingPage extends JFrame {
         });
         add(backButton);
 
-        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("Backgroundimage/Taskadding.jpeg"));
+        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("BackgroundImage/Taskadding.jpeg"));
         Image i2 = i1.getImage().getScaledInstance(600, 500, Image.SCALE_DEFAULT);
         ImageIcon i3 = new ImageIcon(i2);
         JLabel image = new JLabel(i3);

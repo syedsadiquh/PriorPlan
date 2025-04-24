@@ -25,6 +25,4 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     public boolean updateTaskStatus(User user, long taskId, TaskStatus newStatus);
 
 
-
-
 }

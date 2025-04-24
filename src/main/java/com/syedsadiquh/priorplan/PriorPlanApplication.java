@@ -3,6 +3,7 @@ package com.syedsadiquh.priorplan;
 import com.syedsadiquh.priorplan.models.User;
 import com.syedsadiquh.priorplan.repository.UserRepository;
 import com.syedsadiquh.priorplan.ui.LoginSignupGUI;
+import lombok.Getter;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -38,7 +39,10 @@ public class PriorPlanApplication {
 //	public CommandLineRunner commandLineRunner(UserRepository userRepository) {
 //		return args -> {
 //			var user = User.builder().name("Syed Sadiqu").username("syed").password("root").build();
+//			var user2 = User.builder().name("Hussain").username("hussain").password("root").build();
 //			userRepository.save(user);
+//			userRepository.save(user2);
+//
 //		};
 //	}
 

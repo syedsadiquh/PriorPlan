@@ -1,5 +1,6 @@
 package com.syedsadiquh.priorplan.models;
 
+import com.syedsadiquh.priorplan.models.enums.TaskPriority;
 import com.syedsadiquh.priorplan.models.enums.TaskStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,7 +27,10 @@ public class Task {
     private String description;
 
     @Enumerated(EnumType.STRING)
-    private TaskStatus status;
+    private TaskStatus status = TaskStatus.NOT_STARTED;
+
+    @Enumerated(EnumType.STRING)
+    private TaskPriority priority;
 
     private LocalDateTime dueDate;
 

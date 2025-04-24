@@ -73,7 +73,7 @@ public class LoginSignupGUI extends JFrame {
                     boolean res = new UserDAO(userRepo).checkUserInDB(username, password);
                     if (res) {
                         setVisible(false);
-                        new HomePage().setVisible(true);;
+                        new HomePage().setVisible(true);
                     } else {
                         JOptionPane.showMessageDialog(null, "Invalid username or password");
                         usernameField.setText("");
@@ -100,6 +100,7 @@ public class LoginSignupGUI extends JFrame {
         });
     }
 
+    // TODO: Setup the signup later....
     private boolean signupUser(String username, String password) {
         try {
             DatabaseConnector c = new DatabaseConnector();
@@ -126,28 +127,28 @@ public class LoginSignupGUI extends JFrame {
     }
 }
 
-class HomePages extends JFrame {
-    private JLabel welcomeLabel;
-    private JButton logoutButton;
-    // private LoginSignupGUI parentFrame;
-
-    public HomePages(String username, LoginSignupGUI parentFrame) {
-        // this.parentFrame = parentFrame;
-
-        setTitle("To-Do List Home");
-        setSize(300, 200);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-        welcomeLabel = new JLabel("Welcome, " + username + "!");
-        panel.add(welcomeLabel);
-
-        logoutButton = new JButton("Logout");
-        panel.add(logoutButton);
-
-        add(panel);
-
-    }
-}
+//class HomePages extends JFrame {
+//    private JLabel welcomeLabel;
+//    private JButton logoutButton;
+//    // private LoginSignupGUI parentFrame;
+//
+//    public HomePages(String username, LoginSignupGUI parentFrame) {
+//        // this.parentFrame = parentFrame;
+//
+//        setTitle("To-Do List Home");
+//        setSize(300, 200);
+//        setDefaultCloseOperation(EXIT_ON_CLOSE);
+//
+//        JPanel panel = new JPanel();
+//        panel.setLayout(new FlowLayout());
+//        welcomeLabel = new JLabel("Welcome, " + username + "!");
+//        panel.add(welcomeLabel);
+//
+//        logoutButton = new JButton("Logout");
+//        panel.add(logoutButton);
+//
+//        add(panel);
+//
+//    }
+//}
  

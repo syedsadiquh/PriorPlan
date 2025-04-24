@@ -3,8 +3,20 @@ package com.syedsadiquh.priorplan.ui;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
+
+import com.syedsadiquh.priorplan.PriorPlanApplication;
+import com.syedsadiquh.priorplan.dao.TaskDAO;
+import com.syedsadiquh.priorplan.globals.Global;
+import com.syedsadiquh.priorplan.models.Task;
+import com.syedsadiquh.priorplan.repository.TaskRepository;
 import com.toedter.calendar.JDateChooser;
+
+import java.io.BufferedWriter;
+import java.io.CharArrayWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.sql.*;
+import java.util.List;
 
 
 public class TaskAddingPage extends JFrame {
@@ -50,7 +62,7 @@ public class TaskAddingPage extends JFrame {
         priorityLabel.setBounds(50, 110, 120, 20);
         priorityLabel.setFont(boldFont);
         add(priorityLabel);
-        String[] priorities = {"High", "Medium", "Low"};
+        String[] priorities = {"HIGH", "MEDIUM", "LOW"};
         priorityComboBox = new JComboBox<>(priorities);
         priorityComboBox.setBounds(200, 110, 350, 20);
         add(priorityComboBox);
@@ -86,7 +98,7 @@ public class TaskAddingPage extends JFrame {
         });
         add(backButton);
 
-        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("BackgroundImage/Taskadding.jpeg"));
+        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("BackgroundImage/TaskAdding.jpeg"));
         Image i2 = i1.getImage().getScaledInstance(600, 500, Image.SCALE_DEFAULT);
         ImageIcon i3 = new ImageIcon(i2);
         JLabel image = new JLabel(i3);
@@ -102,48 +114,38 @@ public class TaskAddingPage extends JFrame {
         String dueDate = ((JTextField) dueDateField.getDateEditor().getUiComponent()).getText();
         String priority = (String) priorityComboBox.getSelectedItem();
         
-        // Use DatabaseConnector to insert task details into the database
-        try {
-            DatabaseConnector connector = new DatabaseConnector();
-            PreparedStatement statement = connector.prepareStatement("INSERT INTO tasks (description, due_date, priority) VALUES (?, ?, ?)");
-            statement.setString(1, taskDescription);
-            statement.setString(2, dueDate);
-            statement.setString(3, priority);
-            int rowsInserted = statement.executeUpdate();
-            if (rowsInserted > 0) {
-                // Task inserted successfully
-                displayArea.append("Task: " + taskDescription + ", Due Date: " + dueDate + ", Priority: " + priority + "\n");
-            } else {
-                // Failed to insert task
-                System.out.println("Failed to insert task.");
-            }
-            // Close the statement
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Handle database connection or SQL error
+        // insert task details into the database
+        var taskRepo = (TaskRepository) PriorPlanApplication.getApplicationContext().getBean("taskRepository");
+        var res = new TaskDAO(taskRepo).insertTask(Global.user, taskDescription, priority, dueDate);
+        if (res) {
+            // Task inserted successfully
+            System.out.println("New Task Added");
+            displayTasksFromDatabase();
+        } else {
+            // Failed to insert a task
+            System.out.println("Failed to insert task.");
         }
     
         clearFields();
     }
     private void displayTasksFromDatabase() {
-        try {
-            DatabaseConnector connector = new DatabaseConnector();
-            Statement statement = connector.con.createStatement(); // Using con from DatabaseConnector
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM tasks");
-            while (resultSet.next()) {
-                String taskDescription = resultSet.getString("description");
-                String dueDate = resultSet.getString("due_date");
-                String priority = resultSet.getString("priority");
+
+        var taskRepo = (TaskRepository) PriorPlanApplication.getApplicationContext().getBean("taskRepository");
+        List<Task> tasks = taskRepo.findTaskByUser(Global.user);
+        if (tasks.isEmpty()) {
+            displayArea.append("No Task Added yet...");
+        }
+        else {
+            displayArea.setText("");
+            for (Task t : tasks) {
+                String taskDescription = t.getTitle();
+                String dueDate = t.getDueDate().toLocalDate().toString();
+                String priority = t.getPriority().toString();
                 displayArea.append("Task: " + taskDescription + ", Due Date: " + dueDate + ", Priority: " + priority + "\n");
             }
-            // Close the result set and statement
-            resultSet.close();
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Handle database connection or SQL error
         }
+
+
     }
     
  

@@ -30,6 +30,8 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    private String email;
+
     @OneToMany(mappedBy = "user")
     private List<Task> tasks;
 

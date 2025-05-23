@@ -1,14 +1,9 @@
 package com.syedsadiquh.priorplan;
 
-import com.syedsadiquh.priorplan.models.User;
-import com.syedsadiquh.priorplan.repository.UserRepository;
-import com.syedsadiquh.priorplan.ui.LoginSignupGUI;
-import lombok.Getter;
-import org.springframework.boot.CommandLineRunner;
+import com.syedsadiquh.priorplan.ui.LoginPage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
 
 import javax.swing.*;
 
@@ -26,7 +21,7 @@ public class PriorPlanApplication {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				new LoginSignupGUI().setVisible(true);
+				new LoginPage().setVisible(true);
 			}
 		});
 	}

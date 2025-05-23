@@ -2,21 +2,21 @@ package com.syedsadiquh.priorplan.ui;
 
 import com.syedsadiquh.priorplan.PriorPlanApplication;
 import com.syedsadiquh.priorplan.dao.UserDAO;
+import com.syedsadiquh.priorplan.models.User;
 import com.syedsadiquh.priorplan.repository.UserRepository;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.*;
 
-public class LoginSignupGUI extends JFrame {
+public class LoginPage extends JFrame {
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton loginButton;
     private JButton signupButton;
 
-    public LoginSignupGUI() {
+    public LoginPage() {
 
         setTitle("To-Do List Login");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -67,7 +67,7 @@ public class LoginSignupGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    String username = usernameField.getText();
+                    String username = usernameField.getText().strip();
                     String password = new String(passwordField.getPassword());
                     var userRepo = (UserRepository) PriorPlanApplication.getApplicationContext().getBean("userRepository");
                     boolean res = new UserDAO(userRepo).checkUserInDB(username, password);
@@ -88,32 +88,9 @@ public class LoginSignupGUI extends JFrame {
         signupButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                String password = new String(passwordField.getPassword());
-                
-                if (signupUser(username, password)) {
-                    JOptionPane.showMessageDialog(LoginSignupGUI.this, "Sign Up Successful!");
-                } else {
-                    JOptionPane.showMessageDialog(LoginSignupGUI.this, "Sign Up Failed!");
-                }
+                new SignupPage().setVisible(true);
             }
         });
-    }
-
-    // TODO: Setup the signup later....
-    private boolean signupUser(String username, String password) {
-        try {
-            DatabaseConnector c = new DatabaseConnector();
-            String query = "INSERT INTO users (username, password) VALUES (?, ?)";
-            PreparedStatement pstmt = c.prepareStatement(query);
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
-            int rowsInserted = pstmt.executeUpdate();
-            return rowsInserted > 0;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return false;
-        }
     }
     
 
@@ -121,7 +98,7 @@ public class LoginSignupGUI extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new LoginSignupGUI().setVisible(true);
+                new LoginPage().setVisible(true);
             }
         });
     }

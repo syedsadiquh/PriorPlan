@@ -1,6 +1,5 @@
 package com.syedsadiquh.priorplan.dao;
 
-import com.syedsadiquh.priorplan.PriorPlanApplication;
 import com.syedsadiquh.priorplan.globals.Global;
 import com.syedsadiquh.priorplan.models.User;
 import com.syedsadiquh.priorplan.repository.UserRepository;

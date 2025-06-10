@@ -8,9 +8,11 @@ import com.syedsadiquh.priorplan.PriorPlanApplication;
 import com.syedsadiquh.priorplan.dao.TaskDAO;
 import com.syedsadiquh.priorplan.globals.Global;
 import com.syedsadiquh.priorplan.models.Task;
+import com.syedsadiquh.priorplan.models.enums.TaskStatus;
 import com.syedsadiquh.priorplan.repository.TaskRepository;
 import com.toedter.calendar.JDateChooser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -137,7 +139,11 @@ public class TaskAddingPage extends JFrame {
     private void displayTasksFromDatabase() {
 
         var taskRepo = (TaskRepository) PriorPlanApplication.getApplicationContext().getBean("taskRepository");
-        List<Task> tasks = taskRepo.findTaskByUser(Global.user);
+        List<Task> notStartedTasks = taskRepo.findTaskByUserAndStatus(Global.user, TaskStatus.NOT_STARTED);
+        List<Task> inProgressTasks = taskRepo.findTaskByUserAndStatus(Global.user, TaskStatus.IN_PROGRESS);
+        List<Task> tasks = new ArrayList<Task>();
+        tasks.addAll(notStartedTasks);
+        tasks.addAll(inProgressTasks);
         if (tasks.isEmpty()) {
             displayArea.append("No Task Added yet...");
         }

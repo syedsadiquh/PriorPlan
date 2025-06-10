@@ -3,6 +3,7 @@ package com.syedsadiquh.priorplan.dao;
 import com.syedsadiquh.priorplan.models.Task;
 import com.syedsadiquh.priorplan.models.User;
 import com.syedsadiquh.priorplan.models.enums.TaskPriority;
+import com.syedsadiquh.priorplan.models.enums.TaskStatus;
 import com.syedsadiquh.priorplan.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,7 @@ public class TaskDAO {
                     .description(desc)
                     .priority(TaskPriority.valueOf(priority))
                     .dueDate(dateTime)
+                    .status(TaskStatus.NOT_STARTED)
                     .build();
             taskRepository.save(task);
             return true;

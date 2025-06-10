@@ -63,34 +63,26 @@ public class LoginPage extends JFrame {
         image.setSize(600,400);
         add(image);
 
-        loginButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    String username = usernameField.getText().strip();
-                    String password = new String(passwordField.getPassword());
-                    var userRepo = (UserRepository) PriorPlanApplication.getApplicationContext().getBean("userRepository");
-                    boolean res = new UserDAO(userRepo).checkUserInDB(username, password);
-                    if (res) {
-                        setVisible(false);
-                        new HomePage().setVisible(true);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Invalid username or password");
-                        usernameField.setText("");
-                        passwordField.setText("");
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+        loginButton.addActionListener(e -> {
+            try {
+                String username = usernameField.getText().strip();
+                String password = new String(passwordField.getPassword());
+                var userRepo = (UserRepository) PriorPlanApplication.getApplicationContext().getBean("userRepository");
+                boolean res = new UserDAO(userRepo).checkUserInDB(username, password);
+                if (res) {
+                    setVisible(false);
+                    new HomePage().setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid username or password");
+                    usernameField.setText("");
+                    passwordField.setText("");
                 }
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
         });
         
-        signupButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new SignupPage().setVisible(true);
-            }
-        });
+        signupButton.addActionListener(e -> new SignupPage().setVisible(true));
     }
     
 
@@ -103,29 +95,4 @@ public class LoginPage extends JFrame {
         });
     }
 }
-
-//class HomePages extends JFrame {
-//    private JLabel welcomeLabel;
-//    private JButton logoutButton;
-//    // private LoginSignupGUI parentFrame;
-//
-//    public HomePages(String username, LoginSignupGUI parentFrame) {
-//        // this.parentFrame = parentFrame;
-//
-//        setTitle("To-Do List Home");
-//        setSize(300, 200);
-//        setDefaultCloseOperation(EXIT_ON_CLOSE);
-//
-//        JPanel panel = new JPanel();
-//        panel.setLayout(new FlowLayout());
-//        welcomeLabel = new JLabel("Welcome, " + username + "!");
-//        panel.add(welcomeLabel);
-//
-//        logoutButton = new JButton("Logout");
-//        panel.add(logoutButton);
-//
-//        add(panel);
-//
-//    }
-//}
  

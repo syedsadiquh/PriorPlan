@@ -24,5 +24,9 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @Query("update Task t set t.status = :newStatus where t.user = :user and t.taskId = :taskId")
     public boolean updateTaskStatus(User user, long taskId, TaskStatus newStatus);
 
+    @Modifying
+    @Transactional
+    public int deleteTaskByUserAndTaskId(User user, Long taskId);
 
+    public Task getTaskByTaskId(Long taskId);
 }
